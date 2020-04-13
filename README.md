@@ -4,9 +4,9 @@
 The Forest component library is the fastest way to build and deploy websites with Webflow. Rapidly clone from our library of components, including navigations, headers, sections, tables, testimonials, call to actions, footers, buttons and much more.
 
 ## TODO
-- [] Button
-- [] 
-- []
+- [ ] Button
+- [ ] Navigation
+- [ ] 
 
 ## TODO
 
