@@ -14,11 +14,14 @@
     'ui-btn-text':text,
     'ui-btn-tile':tile,
     'ui-btn-rounded':rounded,
-    'ui-btn-circle':circle
-
-
+    'ui-btn-circle':circle,
+    'ui-btn-disabled':disabled
   }
     "
+    :style="{
+      '--color-tint':TintColor,
+      '--color-title':TitleColor
+    }"
   >
     <slot>Button</slot>
   </button>
@@ -31,10 +34,15 @@ export default class UIButton extends Vue {
   // onClickBtn(e: MouseEvent) {
   //   this.$emit("handleButton",e);
   // }
-
+  //发送点击事件
   @Emit("handleButtonClick")
-  onClickBtn(e: MouseEvent) {
+  emitClick(e: MouseEvent) {
     return;
+  }
+  private onClickBtn(e: MouseEvent){
+    if(!this.disabled){
+      this.emitClick(e)
+    }
   }
   //长按钮
   @Prop(Boolean) readonly long!: boolean;
@@ -53,8 +61,43 @@ export default class UIButton extends Vue {
   @Prop(Boolean) readonly rounded!: boolean;
   @Prop(Boolean) readonly circle!: boolean;
   //按钮颜色
+  @Prop(String) readonly color!: string
   //标题颜色
+  @Prop(String) readonly titleColor!: string
+  //禁用状态
+  @Prop(Boolean) readonly disabled!: boolean;
+  //颜色可能是undefined，所以用计算属性
+  private get TintColor(){
+    if(this.disabled){
+      if(this.border||this.text){
+        return '#C5C8CE'
+      }
+      return '#f5f5f5'
+    }
+    if(this.color){
+      return this.color
+    }
+    return '#2D8CF0'
+
+  }
+  //颜色可能是undefined，所以用计算属性
+  private get TitleColor(){
+    if(this.disabled){
+      return '#C5C8CE'
+    }
+    if(this.titleColor){
+      return this.titleColor
+    }
+    if(this.border||this.text){
+      return this.TintColor
+    }
+    return '#000'
+  }
+  //禁用
   //按钮阴影
+  private get msg(){
+    return 14
+  }
 }
 </script>
 
@@ -73,14 +116,16 @@ Resize(mW, h, pLR, fs) {
 
 .ui-btn {
   Resize(64px, 36px, 16px, 0.875rem);
-  border: 0 solid black;
-  background-color: #5d3eff;
+  border: 0 solid var(--color-tint);
+  /*background-color: #5b7fff;*/
+  background-color: var(--color-tint);
   cursor: pointer;
   user-select: none;
   outline: none;
+  color:var(--color-title);
 
   &:hover {
-    background-color: #5234eb;
+
   }
 }
 
@@ -111,7 +156,6 @@ Resize(mW, h, pLR, fs) {
 // 边框
 .ui-btn-border {
   border-width: 1px;
-  color: black;
 }
 
 .ui-btn-dashed {
@@ -120,12 +164,15 @@ Resize(mW, h, pLR, fs) {
 
 .ui-btn-text, .ui-btn-border {
   background-color: transparent;
-  color: black;
+
 }
 //圆角
 .ui-btn-tile
   border-radius 0
 .ui-btn-rounded,.ui-btn-circle
   border-radius 1000px
-
+//禁用
+.ui-btn-disabled{
+  cursor not-allowed
+}
 </style>

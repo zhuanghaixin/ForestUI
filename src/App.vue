@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <UIButton
+        <UIButton :color="color" :titleColor="titleColor"
                 @handleButtonClick="sayHello"
                 :long="long"
                 :xsmall="xsmall"
@@ -14,6 +14,7 @@
                 :tile="tile"
                 :rounded="rounded"
                 :circle="circle"
+                  :disabled="disabled"
 
         >Primary
         </UIButton>
@@ -36,6 +37,26 @@
             <UIButton class="btn-ctrl" @handleButtonClick="reradius('tile')">tile</UIButton>
             <UIButton class="btn-ctrl" @handleButtonClick="reradius('rounded')">rounded</UIButton>
             <UIButton class="btn-ctrl" @handleButtonClick="reradius('circle')">circle</UIButton>
+        </div>
+        <div class="btn-group">
+            <UIButton class="btn-ctrl" @handleButtonClick="retintcolor('normal')">normal</UIButton>
+            <UIButton class="btn-ctrl" @handleButtonClick="retintcolor('#5B7FFF')">#5B7FFF</UIButton>
+            <UIButton class="btn-ctrl" @handleButtonClick="retintcolor('#36AB80')">#36AB80</UIButton>
+            <UIButton class="btn-ctrl" @handleButtonClick="retintcolor('#FFAB80')">#FFAB80</UIButton>
+            <UIButton class="btn-ctrl" @handleButtonClick="retintcolor('#FF5600')">#FF5600</UIButton>
+        </div>
+        <div class="btn-group">
+            <UIButton class="btn-ctrl" @handleButtonClick="retitlecolor('normal')">normal</UIButton>
+            <UIButton class="btn-ctrl" @handleButtonClick="retitlecolor('#5B7FFF')">#5B7FFF</UIButton>
+            <UIButton class="btn-ctrl" @handleButtonClick="retitlecolor('#36AB80')">#36AB80</UIButton>
+            <UIButton class="btn-ctrl" @handleButtonClick="retitlecolor('#FFAB80')">#FFAB80</UIButton>
+            <UIButton class="btn-ctrl" @handleButtonClick="retitlecolor('#FF5600')">#FF5600</UIButton>
+        </div>
+       color <span>{{color}}</span><br>
+       titleColor <span>{{titleColor}}</span>
+        <div class="btn-group">
+            <UIButton class="btn-ctrl" @handleButtonClick="disable">disabled</UIButton>
+
         </div>
     </div>
 </template>
@@ -68,7 +89,11 @@
         private rounded=false
         private circle=false
         //按钮颜色
+        private color=''
         // 标题颜色
+        private titleColor=''
+        //禁用
+        private disabled=false
         //按钮阴影
 
         //重置大小
@@ -99,7 +124,6 @@
                     break;
             }
         }
-
         //重置长度
         private relong() {
             this.long = !this.long;
@@ -149,9 +173,29 @@
                     break;
             }
         }
-
         //重置按钮颜色
+        private retintcolor(name: string){
+            if(name==='normal'){
+                this.color='#2D8CF0'
+            }else{
+                this.color=name
+            }
+
+        }
+
         // 重置标题颜色
+        private retitlecolor(name: string){
+            if(name==='normal'){
+                this.titleColor='#000'
+            }else{
+                this.titleColor=name
+            }
+
+        }
+        //禁用
+        private disable(){
+            this.disabled = !this.disabled;
+        }
         //重置按钮阴影
 
         sayHello(e: MouseEvent) {
@@ -164,7 +208,7 @@
     html, body {
         box-sizing: border-box;
         font-size: 18px;
-        color: #fff;
+        color: #000;
         font-family: 'Helvetica Neue', Helvetica, Arial, 'Microsoft Yahei', 'Hiragino Sans GB', 'Heiti SC', 'WenQuanYi Micro Hei', sans-serif;
     }
 
