@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <UIButton :color="color" :titleColor="titleColor"
+        <UIButton :color="color" :titleColor="titleColor" shadow="10"
                 @handleButtonClick="sayHello"
                 :long="long"
                 :xsmall="xsmall"
